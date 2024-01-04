@@ -1,13 +1,13 @@
-create database app_task
+create database app_tasks
 
 
-create table user(
+create table users(
   id serial primary key,
   name varchar(100),
   email varchar(100),
   age int,
   created timestamp default current_timestamp,
-  edited timestamp DEFAULT current_timestamp ON UPDATE current_timestamp
+  edited timestamp DEFAULT current_timestamp 
 )
 
 create type status_task as enum ('pending', 'process', 'completed');
@@ -18,7 +18,7 @@ create table tasks(
   user_id int,
   title varchar(50),
   description varchar(200),
-  status status_task,
+  status status_task default 'pending',
   created timestamp default current_timestamp,
   edited timestamp DEFAULT current_timestamp 
 )
