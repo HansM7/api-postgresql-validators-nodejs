@@ -17,6 +17,7 @@ class UserService {
   async findUser(id: string) {
     try {
       const response = await userQuery.selectUser(id);
+      if (!response) return responseService.http400("user not found!");
       return responseService.http200(response);
     } catch (error) {
       return responseService.http500(error);
@@ -34,6 +35,8 @@ class UserService {
 
   async updateUser(data: userEditDTO, id: string) {
     try {
+      const user = await this.findUser(id);
+      if (!user.success) return user;
       await userQuery.updateUser(data, id);
       return responseService.http200();
     } catch (error) {
@@ -43,6 +46,8 @@ class UserService {
 
   async deleteUser(id: string) {
     try {
+      const user = await this.findUser(id);
+      if (!user.success) return user;
       await userQuery.deleteUser(id);
       return responseService.http200();
     } catch (error) {
